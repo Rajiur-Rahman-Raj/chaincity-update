@@ -111,7 +111,25 @@
                                                     </li>
 
                                                     <li class="my-3">
-                                                        <span><i class="fal fa-check-circle site__color" aria-hidden="true"></i> @lang('Profit Return Status') : <span class="badge {{ $singleInvestDetails->status == 1 ? 'bg-success' : 'bg-primary' }}">{{ $singleInvestDetails->status == 1 ? trans('Completed') : trans('Running') }}</span></span>
+                                                        <span><i class="fal fa-check-circle site__color"
+                                                                 aria-hidden="true"></i> @lang('Profit Return Status') : <span
+                                                                class="badge
+                                                        @if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1)
+                                                            bg-success
+                                                        @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0)
+                                                            bg-warning
+                                                        @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1)
+                                                            bg-primary
+                                                        @endif">
+                                                            @if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1)
+                                                                    @lang('Completed')
+                                                                @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0)
+                                                                    @lang('Upcoming')
+                                                                @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1)
+                                                                    @lang('Running')
+                                                                @endif
+                                                            </span>
+                                                        </span>
                                                     </li>
 
                                                     <li class="my-3">

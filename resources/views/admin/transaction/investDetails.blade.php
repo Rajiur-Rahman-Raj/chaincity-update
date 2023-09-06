@@ -105,7 +105,23 @@
                                         <li class="my-3">
                                             <span><i class="icon-check mr-2 text--site text-warning"></i> {{trans('Profit Return Status')}} :
 
-                                                <span class="custom-badge badge-pill {{ $singleInvestDetails->status == 1 ? 'bg-success' : 'bg-primary' }}">{{ $singleInvestDetails->status == 1 ? trans('Completed') : trans('Running') }}</span></span>
+                                                <span class="custom-badge badge-pill
+                                                @if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1)
+                                                    bg-success
+                                                @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0)
+                                                    bg-warning
+                                                @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1)
+                                                    bg-primary
+                                                @endif
+                                                ">
+                                                   @if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1)
+                                                        @lang('Completed')
+                                                    @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0)
+                                                        @lang('Upcoming')
+                                                    @elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1)
+                                                        @lang('Running')
+                                                    @endif
+                                                </span></span>
                                         </li>
 
                                         <li class="my-3">

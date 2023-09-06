@@ -111,7 +111,25 @@
                                                     </li>
 
                                                     <li class="my-3">
-                                                        <span><i class="fal fa-check-circle site__color" aria-hidden="true"></i> <?php echo app('translator')->get('Profit Return Status'); ?> : <span class="badge <?php echo e($singleInvestDetails->status == 1 ? 'bg-success' : 'bg-primary'); ?>"><?php echo e($singleInvestDetails->status == 1 ? trans('Completed') : trans('Running')); ?></span></span>
+                                                        <span><i class="fal fa-check-circle site__color"
+                                                                 aria-hidden="true"></i> <?php echo app('translator')->get('Profit Return Status'); ?> : <span
+                                                                class="badge
+                                                        <?php if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1): ?>
+                                                            bg-success
+                                                        <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0): ?>
+                                                            bg-warning
+                                                        <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1): ?>
+                                                            bg-primary
+                                                        <?php endif; ?>">
+                                                            <?php if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1): ?>
+                                                                    <?php echo app('translator')->get('Completed'); ?>
+                                                                <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0): ?>
+                                                                    <?php echo app('translator')->get('Upcoming'); ?>
+                                                                <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1): ?>
+                                                                    <?php echo app('translator')->get('Running'); ?>
+                                                                <?php endif; ?>
+                                                            </span>
+                                                        </span>
                                                     </li>
 
                                                     <li class="my-3">

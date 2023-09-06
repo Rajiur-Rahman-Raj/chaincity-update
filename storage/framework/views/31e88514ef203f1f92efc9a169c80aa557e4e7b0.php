@@ -158,7 +158,7 @@
                                         <h5 class="text-dark mb-0 font-16 font-weight-medium">
                                             <?php echo app('translator')->get(\Illuminate\Support\Str::limit(optional($invest->property->details)->property_title, 30)); ?>
                                         </h5>
-                                        <span class="text-muted font-14"><?php echo app('translator')->get('Invested: '); ?><span><?php echo e(config('basic.currency_symbol')); ?></span><?php echo e((int)$invest->amount); ?></span>
+                                        <span class="text-primary font-weight-medium font-14"><?php echo app('translator')->get('Invested: '); ?><span><?php echo e(config('basic.currency_symbol')); ?></span><?php echo e((int)$invest->amount); ?></span>
                                     </div>
                                 </div>
                             </a>
@@ -174,23 +174,39 @@
                                 <?php echo e(config('basic.currency_symbol')); ?><?php echo e($invest->net_profit); ?>
 
                             <?php else: ?>
-                                <?php echo e(config('basic.currency_symbol')); ?><?php echo app('translator')->get('0.00'); ?>
+                                <span class="custom-badge badge-pill bg-danger"><?php echo app('translator')->get('N/A'); ?></span>
                             <?php endif; ?>
 
                         </td>
 
                         <td data-label="<?php echo app('translator')->get('Upcoming Payment'); ?>">
                             <?php if($invest->invest_status == 0): ?>
-                                <span class="custom-badge badge-pill bg-danger"><?php echo app('translator')->get('N/A'); ?></span>
+                                <span class="custom-badge badge-pill bg-danger"><?php echo app('translator')->get('after installments complete'); ?></span>
                             <?php else: ?>
                                 <?php echo e(customDate($invest->return_date)); ?>
 
                             <?php endif; ?>
                         </td>
 
-                        <td data-label="<?php echo app('translator')->get('Profit Status'); ?>">
-                            <span class="custom-badge badge-pill <?php echo e($invest->status == 1 ? 'bg-success' : 'bg-primary'); ?>"><?php echo e($invest->status == 1 ? trans('Completed') : trans('Running')); ?></span>
-                        </td>
+                            <td data-label="<?php echo app('translator')->get('Profit Status'); ?>">
+                            <span class="custom-badge badge-pill
+                            <?php if($invest->status == 1 && $invest->invest_status == 1): ?>
+                                bg-success
+                            <?php elseif($invest->status == 0 && $invest->invest_status == 0): ?>
+                                bg-warning
+                            <?php elseif($invest->status == 0 && $invest->invest_status == 1): ?>
+                                bg-primary
+                            <?php endif; ?>
+                            ">
+                                <?php if($invest->status == 1 && $invest->invest_status == 1): ?>
+                                    <?php echo app('translator')->get('Completed'); ?>
+                                <?php elseif($invest->status == 0 && $invest->invest_status == 0): ?>
+                                    <?php echo app('translator')->get('Upcoming'); ?>
+                                <?php elseif($invest->status == 0 && $invest->invest_status == 1): ?>
+                                    <?php echo app('translator')->get('Running'); ?>
+                                <?php endif; ?>
+                            </span>
+                            </td>
 
                         <td data-label="<?php echo app('translator')->get('Payment Status'); ?>">
                             <span class="custom-badge badge-pill <?php echo e($invest->invest_status == 1 ? 'bg-success' : 'bg-warning'); ?>"><?php echo e($invest->invest_status == 1 ? trans('clear') : trans('Due')); ?></span>

@@ -158,7 +158,7 @@
                                         <h5 class="text-dark mb-0 font-16 font-weight-medium">
                                             @lang(\Illuminate\Support\Str::limit(optional($invest->property->details)->property_title, 30))
                                         </h5>
-                                        <span class="text-muted font-14">@lang('Invested: ')<span>{{ config('basic.currency_symbol') }}</span>{{ (int)$invest->amount }}</span>
+                                        <span class="text-primary font-weight-medium font-14">@lang('Invested: ')<span>{{ config('basic.currency_symbol') }}</span>{{ (int)$invest->amount }}</span>
                                     </div>
                                 </div>
                             </a>
@@ -172,22 +172,38 @@
                             @if($invest->invest_status == 1)
                                 {{ config('basic.currency_symbol') }}{{ $invest->net_profit }}
                             @else
-                                {{ config('basic.currency_symbol') }}@lang('0.00')
+                                <span class="custom-badge badge-pill bg-danger">@lang('N/A')</span>
                             @endif
 
                         </td>
 
                         <td data-label="@lang('Upcoming Payment')">
                             @if($invest->invest_status == 0)
-                                <span class="custom-badge badge-pill bg-danger">@lang('N/A')</span>
+                                <span class="custom-badge badge-pill bg-danger">@lang('after installments complete')</span>
                             @else
                                 {{ customDate($invest->return_date) }}
                             @endif
                         </td>
 
-                        <td data-label="@lang('Profit Status')">
-                            <span class="custom-badge badge-pill {{ $invest->status == 1 ? 'bg-success' : 'bg-primary' }}">{{ $invest->status == 1 ? trans('Completed') : trans('Running') }}</span>
-                        </td>
+                            <td data-label="@lang('Profit Status')">
+                            <span class="custom-badge badge-pill
+                            @if($invest->status == 1 && $invest->invest_status == 1)
+                                bg-success
+                            @elseif($invest->status == 0 && $invest->invest_status == 0)
+                                bg-warning
+                            @elseif($invest->status == 0 && $invest->invest_status == 1)
+                                bg-primary
+                            @endif
+                            ">
+                                @if($invest->status == 1 && $invest->invest_status == 1)
+                                    @lang('Completed')
+                                @elseif($invest->status == 0 && $invest->invest_status == 0)
+                                    @lang('Upcoming')
+                                @elseif($invest->status == 0 && $invest->invest_status == 1)
+                                    @lang('Running')
+                                @endif
+                            </span>
+                            </td>
 
                         <td data-label="@lang('Payment Status')">
                             <span class="custom-badge badge-pill {{ $invest->invest_status == 1 ? 'bg-success' : 'bg-warning' }}">{{ $invest->invest_status == 1 ? trans('clear') : trans('Due') }}</span>

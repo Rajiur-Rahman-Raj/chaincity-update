@@ -107,13 +107,13 @@
                                 @if($invest->invest_status == 1)
                                     {{  $invest->profit_type == 0 ? config('basic.currency_symbol').$invest->profit : config('basic.currency_symbol').$invest->net_profit }}
                                 @else
-                                    @lang('N/A')
+                                    <span class="badge bg-danger">@lang('N/A')</span>
                                 @endif
                             </td>
 
                             <td data-label="@lang('Upcoming Payment')">
                                 @if($invest->invest_status == 0)
-                                    <span class="badge bg-danger">@lang('After Installments complete')</span>
+                                    <span class="badge bg-warning">@lang('After Installments complete')</span>
                                 @elseif($invest->invest_status == 1 && $invest->return_date == null && $invest->status == 1)
                                     <span class="badge bg-success">@lang('All completed')</span>
                                 @else

@@ -107,13 +107,13 @@
                                     <?php echo e($invest->profit_type == 0 ? config('basic.currency_symbol').$invest->profit : config('basic.currency_symbol').$invest->net_profit); ?>
 
                                 <?php else: ?>
-                                    <?php echo app('translator')->get('N/A'); ?>
+                                    <span class="badge bg-danger"><?php echo app('translator')->get('N/A'); ?></span>
                                 <?php endif; ?>
                             </td>
 
                             <td data-label="<?php echo app('translator')->get('Upcoming Payment'); ?>">
                                 <?php if($invest->invest_status == 0): ?>
-                                    <span class="badge bg-danger"><?php echo app('translator')->get('After Installments complete'); ?></span>
+                                    <span class="badge bg-warning"><?php echo app('translator')->get('After Installments complete'); ?></span>
                                 <?php elseif($invest->invest_status == 1 && $invest->return_date == null && $invest->status == 1): ?>
                                     <span class="badge bg-success"><?php echo app('translator')->get('All completed'); ?></span>
                                 <?php else: ?>

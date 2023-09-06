@@ -105,7 +105,23 @@
                                         <li class="my-3">
                                             <span><i class="icon-check mr-2 text--site text-warning"></i> <?php echo e(trans('Profit Return Status')); ?> :
 
-                                                <span class="custom-badge badge-pill <?php echo e($singleInvestDetails->status == 1 ? 'bg-success' : 'bg-primary'); ?>"><?php echo e($singleInvestDetails->status == 1 ? trans('Completed') : trans('Running')); ?></span></span>
+                                                <span class="custom-badge badge-pill
+                                                <?php if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1): ?>
+                                                    bg-success
+                                                <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0): ?>
+                                                    bg-warning
+                                                <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1): ?>
+                                                    bg-primary
+                                                <?php endif; ?>
+                                                ">
+                                                   <?php if($singleInvestDetails->status == 1 && $singleInvestDetails->invest_status == 1): ?>
+                                                        <?php echo app('translator')->get('Completed'); ?>
+                                                    <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 0): ?>
+                                                        <?php echo app('translator')->get('Upcoming'); ?>
+                                                    <?php elseif($singleInvestDetails->status == 0 && $singleInvestDetails->invest_status == 1): ?>
+                                                        <?php echo app('translator')->get('Running'); ?>
+                                                    <?php endif; ?>
+                                                </span></span>
                                         </li>
 
                                         <li class="my-3">
