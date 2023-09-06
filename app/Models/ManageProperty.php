@@ -122,6 +122,11 @@ class ManageProperty extends Model
         ];
     }
 
+    public function dueInvestmentAmount($investAmount){
+        $dueInvestAmount = $this->fixed_amount - $investAmount;
+        return $dueInvestAmount;
+    }
+
     public function totalCompletedInvestUserAndAmount(){
         $totalInvestedUser = 0;
         $totalInvestedAmount = 0;

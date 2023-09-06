@@ -48,7 +48,7 @@
                             </td>
 
                             <td data-label="@lang('Due Amount')">
-                                {{ config('basic.currency_symbol') }}{{ optional(($invest)->property)->totalDueInvestUserAndAmount()['totalDueAmount'] }}
+                                {{ config('basic.currency_symbol') }}{{ optional(($invest)->property)->dueInvestmentAmount($invest->amount) }}
                             </td>
 
                             <td data-label="@lang('Due Installments')">

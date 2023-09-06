@@ -3,15 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c042b20e-ac07-4823-acfc-5307c5c6efae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/transaction/investDetails.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/transaction/investDetails.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/transaction/investLog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/transaction/investLog.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/themes/original/user/transaction/investDetails.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/themes/original/user/transaction/investDetails.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/themes/original/user/transaction/investLog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/themes/original/user/transaction/investLog.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/grcwiISF7TtH7THhy8hZJU5EmqYX0eImo1XYzTS0" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/sessions/grcwiISF7TtH7THhy8hZJU5EmqYX0eImo1XYzTS0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/1292934b64577be957ec08774b50c504ebfc6958.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/1292934b64577be957ec08774b50c504ebfc6958.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/31e88514ef203f1f92efc9a169c80aa557e4e7b0.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/31e88514ef203f1f92efc9a169c80aa557e4e7b0.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/8c96c9d69b60d02d225db14a716b3aa207a1d2be.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/8c96c9d69b60d02d225db14a716b3aa207a1d2be.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/f6c8b2f82588afd8815d0866d6563d6d497ff13a.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/f6c8b2f82588afd8815d0866d6563d6d497ff13a.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ManageProperty.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ManageProperty.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/dueInvestedUserList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/dueInvestedUserList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/ovsUNdAxm037AxNkEGERkwVo2aP5xe4bI1oj2pSK" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +190,7 @@
       <option name="presentableId" value="Default" />
       <updated>1693896385217</updated>
       <workItem from="1693896386617" duration="18108000" />
-      <workItem from="1693974761878" duration="10056000" />
+      <workItem from="1693974761878" duration="11221000" />
     </task>
     <servers />
   </component>

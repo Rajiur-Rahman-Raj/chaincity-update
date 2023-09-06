@@ -48,7 +48,7 @@
                             </td>
 
                             <td data-label="<?php echo app('translator')->get('Due Amount'); ?>">
-                                <?php echo e(config('basic.currency_symbol')); ?><?php echo e(optional(($invest)->property)->totalDueInvestUserAndAmount()['totalDueAmount']); ?>
+                                <?php echo e(config('basic.currency_symbol')); ?><?php echo e(optional(($invest)->property)->dueInvestmentAmount($invest->amount)); ?>
 
                             </td>
 

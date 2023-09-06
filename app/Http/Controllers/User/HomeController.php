@@ -1886,7 +1886,8 @@ class HomeController extends Controller
             ->withCount('getFavourite')
             ->where('expire_date', '>', now())
             ->where('status', 1)
-            ->latest()->paginate(config('basic.paginate'));
+            ->orderBy('start_date')
+            ->paginate(config('basic.paginate'));
 
         $data['sharedProperties'] = PropertyShare::with(['getInvestment', 'property.getReviews', 'propertyOffer.offerlock'])->where('status', 1)->latest()->paginate(config('basic.paginate'));
 
