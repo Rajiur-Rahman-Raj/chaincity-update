@@ -81,7 +81,7 @@
                                                     @endif
 
                                                     <li class="my-3">
-                                                        <span><i class="fal fa-check-circle site__color" aria-hidden="true"></i> @lang('Return Interval') : <span class="font-weight-bold text-primary">{{ $singleInvestDetails->return_time }} {{ $singleInvestDetails->return_time_type }}</span></span>
+                                                        <span><i class="fal fa-check-circle site__color" aria-hidden="true"></i> @lang('Profit Return Interval') : <span class="font-weight-bold text-primary">{{ $singleInvestDetails->return_time }} {{ $singleInvestDetails->return_time_type }}</span></span>
                                                     </li>
 
                                                     <li class="my-3">
@@ -89,7 +89,7 @@
                                                     </li>
 
                                                     <li class="my-3">
-                                                            <span><i class="fal fa-check-circle site__color" aria-hidden="true"></i> @lang('Next Return Date') :
+                                                            <span><i class="fal fa-check-circle site__color" aria-hidden="true"></i> @lang('Next Profit Return Date') :
                                                                 <span class="font-weight-bold">
                                                                     @if($singleInvestDetails->invest_status == 0)
                                                                         <span class="badge bg-danger">@lang('After All Installment completed')</span>
@@ -103,7 +103,7 @@
                                                     </li>
 
                                                     <li class="my-3">
-                                                        <span><i class="{{ $singleInvestDetails->last_return_date != null ? 'fal fa-check-circle text-success' : 'fal fa-times-circle text-danger' }}" aria-hidden="true"></i> @lang('Last Return Date') : <span class="{{ $singleInvestDetails->last_return_date != null ? 'text-dark font-weight-bold' : 'text-danger font-weight-bold' }}">{{ $singleInvestDetails->last_return_date != null ? customDate($singleInvestDetails->last_return_date) : 'N/A' }}</span></span>
+                                                        <span><i class="{{ $singleInvestDetails->last_return_date != null ? 'fal fa-check-circle text-success' : 'fal fa-times-circle text-danger' }}" aria-hidden="true"></i> @lang('Last Profit Return Date') : <span class="{{ $singleInvestDetails->last_return_date != null ? 'text-dark font-weight-bold' : 'text-danger font-weight-bold' }}">{{ $singleInvestDetails->last_return_date != null ? customDate($singleInvestDetails->last_return_date) : 'N/A' }}</span></span>
                                                     </li>
 
                                                     <li class="my-3">

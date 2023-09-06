@@ -55,7 +55,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item <?php echo e(menuActive(['admin.propertyCreate'])); ?>">
                         <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                             <i class="fa fa-building text-success"></i>
                             <span class="hide-menu"><?php echo app('translator')->get('Investment Properties'); ?></span>
@@ -66,15 +66,16 @@
                                     <span class="hide-menu"><?php echo app('translator')->get('All Properties'); ?></span>
                                 </a>
                             </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link" href="<?php echo e(route('admin.propertyList',['upcoming'])); ?>" aria-expanded="false">
-                                    <span class="hide-menu"><?php echo app('translator')->get('Upcoming Properties'); ?></span>
-                                </a>
-                            </li>
 
                             <li class="sidebar-item">
                                 <a class="sidebar-link" href="<?php echo e(route('admin.propertyList',['running'])); ?>" aria-expanded="false">
                                     <span class="hide-menu"><?php echo app('translator')->get('Running Properties'); ?></span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="<?php echo e(route('admin.propertyList',['upcoming'])); ?>" aria-expanded="false">
+                                    <span class="hide-menu"><?php echo app('translator')->get('Upcoming Properties'); ?></span>
                                 </a>
                             </li>
 

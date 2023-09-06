@@ -44,11 +44,16 @@ $(document).on('click', '.investNow', function () {
 
     if (returnTimes == null) {
         let data = dataPeriod + ' ' + dataPeriodType;
+        $('.profit_return').text(data);
         $('.data_return').text(data);
         $('.data_return').text(`${data} (Lifetime)`);
+        $('.profit_return_message').text(`N.B: From the date on which the property investment period ends, you will get the profit for a lifetime consecutively ${data} after each.`)
+
     } else {
         let data = dataPeriod + ' ' + dataPeriodType;
         $('.data_return').text(`${data} (${returnTimes} times)`);
+
+        $('.profit_return_message').text(`N.B: From the date on which the property investment period ends, you will get the profit for consecutively ${data} after each. And you will get a profit return maximum of ${returnTimes} Times.`)
     }
 
 

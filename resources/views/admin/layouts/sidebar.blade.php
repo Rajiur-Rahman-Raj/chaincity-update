@@ -55,7 +55,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{menuActive(['admin.propertyCreate'])}}">
                         <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                             <i class="fa fa-building text-success"></i>
                             <span class="hide-menu">@lang('Investment Properties')</span>
@@ -66,15 +66,16 @@
                                     <span class="hide-menu">@lang('All Properties')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link" href="{{ route('admin.propertyList',['upcoming'])}}" aria-expanded="false">
-                                    <span class="hide-menu">@lang('Upcoming Properties')</span>
-                                </a>
-                            </li>
 
                             <li class="sidebar-item">
                                 <a class="sidebar-link" href="{{ route('admin.propertyList',['running'])}}" aria-expanded="false">
                                     <span class="hide-menu">@lang('Running Properties')</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ route('admin.propertyList',['upcoming'])}}" aria-expanded="false">
+                                    <span class="hide-menu">@lang('Upcoming Properties')</span>
                                 </a>
                             </li>
 

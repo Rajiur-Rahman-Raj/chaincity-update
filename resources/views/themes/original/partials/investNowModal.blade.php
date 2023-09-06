@@ -23,14 +23,14 @@
                                 <div class="details_list">
                                     <ul>
                                         <li class="d-flex justify-content-between" id="available_funding">
-                                            <span>@lang('Available for funding')</span> <span
+                                            <span>@lang('Available fund for investment')</span> <span
                                                 class="available_funding"></span></li>
-                                        <li class="d-flex justify-content-between"><span>@lang('Invest')</span>
+                                        <li class="d-flex justify-content-between"><span>@lang('Investment Amount')</span>
                                             <span class="data_invest"></span></li>
-                                        <li class="d-flex justify-content-between"><span>@lang('Profit')</span>
+                                        <li class="d-flex justify-content-between"><span>@lang('Profit Return')</span>
                                             <span class="data_profit"></span></li>
                                         <li class="d-flex justify-content-between">
-                                            <span>@lang('Return Interval')</span>
+                                            <span>@lang('Profit Return Interval')</span>
                                             <span class="data_return"></span></li>
                                         <li class="d-flex justify-content-between totalInstallment">
                                             <span>@lang('Total Installment')</span><span
@@ -42,8 +42,10 @@
                                             <span>@lang('Installment Late Fee')</span><span
                                                 class="installment_late_fee"></span></li>
                                         <li class="d-flex justify-content-between">
-                                            <span>@lang('Investment Duration')</span>
+                                            <span>@lang('Investment Period')</span>
                                             <span class="primary_color" id="investmentDuration"></span></li>
+                                        <div class="bd-callout bd-callout-warning m-0 mb-4">
+                                            <i class="fas fa-info-circle mr-2"></i> <span class="profit_return_message"></span> </div>
                                     </ul>
                                 </div>
                             </div>

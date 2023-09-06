@@ -23,14 +23,14 @@
                                 <div class="details_list">
                                     <ul>
                                         <li class="d-flex justify-content-between" id="available_funding">
-                                            <span><?php echo app('translator')->get('Available for funding'); ?></span> <span
+                                            <span><?php echo app('translator')->get('Available fund for investment'); ?></span> <span
                                                 class="available_funding"></span></li>
-                                        <li class="d-flex justify-content-between"><span><?php echo app('translator')->get('Invest'); ?></span>
+                                        <li class="d-flex justify-content-between"><span><?php echo app('translator')->get('Investment Amount'); ?></span>
                                             <span class="data_invest"></span></li>
-                                        <li class="d-flex justify-content-between"><span><?php echo app('translator')->get('Profit'); ?></span>
+                                        <li class="d-flex justify-content-between"><span><?php echo app('translator')->get('Profit Return'); ?></span>
                                             <span class="data_profit"></span></li>
                                         <li class="d-flex justify-content-between">
-                                            <span><?php echo app('translator')->get('Return Interval'); ?></span>
+                                            <span><?php echo app('translator')->get('Profit Return Interval'); ?></span>
                                             <span class="data_return"></span></li>
                                         <li class="d-flex justify-content-between totalInstallment">
                                             <span><?php echo app('translator')->get('Total Installment'); ?></span><span
@@ -42,8 +42,10 @@
                                             <span><?php echo app('translator')->get('Installment Late Fee'); ?></span><span
                                                 class="installment_late_fee"></span></li>
                                         <li class="d-flex justify-content-between">
-                                            <span><?php echo app('translator')->get('Investment Duration'); ?></span>
+                                            <span><?php echo app('translator')->get('Investment Period'); ?></span>
                                             <span class="primary_color" id="investmentDuration"></span></li>
+                                        <div class="bd-callout bd-callout-warning m-0 mb-4">
+                                            <i class="fas fa-info-circle mr-2"></i> <span class="profit_return_message"></span> </div>
                                     </ul>
                                 </div>
                             </div>

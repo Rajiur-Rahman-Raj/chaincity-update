@@ -47,10 +47,10 @@
                         <?php endif; ?>
 
                         <th scope="col"><?php echo app('translator')->get('Property'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Investment Amount'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Total Investment'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Profit'); ?>(<?php echo app('translator')->get('% / fixed'); ?>)</th>
-                        <th scope="col"><?php echo app('translator')->get('Installment'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Investment Amount'); ?> <span class="text-primary font-12">(<?php echo app('translator')->get('Range/fixed'); ?>)</span></th>
+                        <th scope="col"><?php echo app('translator')->get('Total Investment Need'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Profit'); ?><span class="text-primary font-12">(<?php echo app('translator')->get('%/fixed'); ?>)</span></th>
+                        <th scope="col"><?php echo app('translator')->get('Installment Facility'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Status'); ?></th>
                         <?php if(adminAccessRoute(config('role.manage_property.access.edit')) == true || adminAccessRoute(config('role.manage_property.access.delete')) == true): ?>
                             <th scope="col"><?php echo app('translator')->get('Action'); ?></th>
@@ -211,7 +211,7 @@
         <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title"><?php echo app('translator')->get('Property Investment Info'); ?></h5>
+                    <h5 class="modal-title"><?php echo app('translator')->get('Property Investment Information'); ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -230,7 +230,7 @@
                         </li>
 
                         <li class="list-group-item">
-                            <span class="font-weight-bold"> <?php echo app('translator')->get('Expected Amount'); ?>: </span>
+                            <span class="font-weight-bold"> <?php echo app('translator')->get('Need Total Invest Amount'); ?>: </span>
                             <span class="font-weight-bold ml-3 requiredAmount"></span>
                         </li>
 
@@ -245,12 +245,12 @@
                         </li>
 
                         <li class="list-group-item">
-                            <span class="font-weight-bold "> <?php echo app('translator')->get('Start Date'); ?>: </span>
+                            <span class="font-weight-bold "> <?php echo app('translator')->get('Investment Start Date'); ?>: </span>
                             <span class="font-weight-bold ml-3 startDate"></span>
                         </li>
 
                         <li class="list-group-item">
-                            <span class="font-weight-bold "> <?php echo app('translator')->get('Expire Date'); ?>: </span>
+                            <span class="font-weight-bold "> <?php echo app('translator')->get('Investment Expire Date'); ?>: </span>
                             <span class="font-weight-bold ml-3 expireDate"></span>
                         </li>
                     </ul>

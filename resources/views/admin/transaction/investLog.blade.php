@@ -107,7 +107,7 @@
                     <th>@lang('SL')</th>
                     <th>@lang('User')</th>
                     <th>@lang('Property')</th>
-                    <th>@lang('Invest Amount')</th>
+                    <th>@lang('Investment Amount')</th>
                     <th>@lang('Profit')</th>
                     <th>@lang('Upcoming Payment')</th>
                     <th>@lang('Profit Status')</th>

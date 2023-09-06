@@ -48,10 +48,10 @@
                         @endif
 
                         <th scope="col">@lang('Property')</th>
-                        <th scope="col">@lang('Investment Amount')</th>
-                        <th scope="col">@lang('Total Investment')</th>
-                        <th scope="col">@lang('Profit')(@lang('% / fixed'))</th>
-                        <th scope="col">@lang('Installment')</th>
+                        <th scope="col">@lang('Investment Amount') <span class="text-primary font-12">(@lang('Range/fixed'))</span></th>
+                        <th scope="col">@lang('Total Investment Need')</th>
+                        <th scope="col">@lang('Profit')<span class="text-primary font-12">(@lang('%/fixed'))</span></th>
+                        <th scope="col">@lang('Installment Facility')</th>
                         <th scope="col">@lang('Status')</th>
                         @if(adminAccessRoute(config('role.manage_property.access.edit')) == true || adminAccessRoute(config('role.manage_property.access.delete')) == true)
                             <th scope="col">@lang('Action')</th>
@@ -211,7 +211,7 @@
         <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">@lang('Property Investment Info')</h5>
+                    <h5 class="modal-title">@lang('Property Investment Information')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -230,7 +230,7 @@
                         </li>
 
                         <li class="list-group-item">
-                            <span class="font-weight-bold"> @lang('Expected Amount'): </span>
+                            <span class="font-weight-bold"> @lang('Need Total Invest Amount'): </span>
                             <span class="font-weight-bold ml-3 requiredAmount"></span>
                         </li>
 
@@ -245,12 +245,12 @@
                         </li>
 
                         <li class="list-group-item">
-                            <span class="font-weight-bold "> @lang('Start Date'): </span>
+                            <span class="font-weight-bold "> @lang('Investment Start Date'): </span>
                             <span class="font-weight-bold ml-3 startDate"></span>
                         </li>
 
                         <li class="list-group-item">
-                            <span class="font-weight-bold "> @lang('Expire Date'): </span>
+                            <span class="font-weight-bold "> @lang('Investment Expire Date'): </span>
                             <span class="font-weight-bold ml-3 expireDate"></span>
                         </li>
                     </ul>

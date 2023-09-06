@@ -78,7 +78,7 @@
 
                                         <li class="my-3">
                                             <span>
-                                                <i class="icon-check mr-2 text--site text-success"></i> {{trans('Next Return Date')}} :
+                                                <i class="icon-check mr-2 text--site text-success"></i> {{trans('Next Profit Return Date')}} :
                                                 @if($singleInvestDetails->invest_status == 0)
                                                     <span class="custom-badge bg-danger badge-pill">@lang('After All Installment completed')</span>
                                                 @elseif($singleInvestDetails->invest_status == 1 && $singleInvestDetails->return_date == null && $singleInvestDetails->status == 1)
@@ -91,7 +91,7 @@
 
                                         <li class="my-3">
                                             <span>
-                                                <i class="mr-2 text--site  {{ $singleInvestDetails->last_return_date != null ? 'far fa-check-circle text-success' : 'far fa-times-circle text-danger' }}"></i> {{trans('Last Return Date')}} :
+                                                <i class="mr-2 text--site  {{ $singleInvestDetails->last_return_date != null ? 'far fa-check-circle text-success' : 'far fa-times-circle text-danger' }}"></i> {{trans('Last Profit Return Date')}} :
                                                 <span class="font-weight-bold text-warning {{ $singleInvestDetails->last_return_date != null ? 'text-dark' : 'text-danger' }}">{{ $singleInvestDetails->last_return_date != null ? customDate($singleInvestDetails->last_return_date) : 'N/A' }}</span>
                                             </span>
                                         </li>
