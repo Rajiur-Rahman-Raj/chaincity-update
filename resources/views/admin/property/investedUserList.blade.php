@@ -17,8 +17,8 @@
                         <th scope="col">@lang('User')</th>
                         <th scope="col">@lang('Invested Amount')</th>
                         <th scope="col">@lang('Profit')</th>
-                        <th scope="col">@lang('Return Date')</th>
-                        <th scope="col">@lang('Payment Status')</th>
+                        <th scope="col">@lang('Profit Return Date')</th>
+                        <th scope="col">@lang('Profit Return Times')</th>
                         <th scope="col">@lang('Action')</th>
                     </tr>
                     </thead>
@@ -58,7 +58,7 @@
 
                             </td>
 
-                            <td data-label="@lang('Return Date')">
+                            <td data-label="@lang('Profit Return Date')">
                                 @if($invest->how_many_times != 0 && $invest->how_many_times != null && $invest->return_date != null)
                                     {{ customDate($invest->return_date) }}
                                 @elseif($invest->how_many_times != null && $invest->return_date == null)
@@ -68,7 +68,7 @@
                                 @endif
                             </td>
 
-                            <td data-label="@lang('Payment Status')">
+                            <td data-label="@lang('Profit Return Times')">
                                 @if($invest->how_many_times == 0 && $invest->status == 1)
                                     <span class="custom-badge bg-success badge-pill">@lang('Completed')</span>
                                 @elseif($invest->how_many_times == null && $invest->status == 0)
@@ -81,21 +81,15 @@
 
                             <td data-label="@lang('Action')">
                                 @if(($invest->how_many_times == null || $invest->how_many_times != 0) && $invest->status == 0 )
-                                    @php
-                                        $todayDate = \Carbon\Carbon::now()->format('Y-m-d');
-                                        $expireDate = \Carbon\Carbon::parse(optional($invest->property)->expire_date)->format('Y-m-d');
-                                        $returnDate = \Carbon\Carbon::parse($invest->return_date)->format('Y-m-d');
-                                    @endphp
-
-                                    @if($todayDate > $expireDate && optional($invest->property)->is_payment == 0)
-                                        <button class="btn btn-sm  btn-outline-primary btn-rounded btn-sm investPaymentSingleUser {{ $todayDate != $returnDate ? 'disabled' : '' }}" {{ $todayDate != $returnDate ? 'disabled' : '' }}
+                                    @if(now()->gt(optional($invest->property)->expire_date) && optional($invest->property)->is_payment == 0)
+                                        <button class="btn btn-sm  btn-outline-primary btn-rounded btn-sm investPaymentSingleUser "
                                                 type="button"
                                                 data-route="{{ route('admin.investPaymentSingleUser', $invest->id) }}"
-                                                data-amount="{{ $invest->amount }}"
+                                                data-property="{{ $invest }}"
                                                 data-toggle="modal"
                                                 data-target="#investPaymentSingleUserModal">
                                             <span>
-                                                <i class="fa fa-credit-card"></i> @lang(' Pay')
+                                                <i class="fa fa-credit-card"></i> @lang(' Pay Manually Single User')
                                             </span>
                                         </button>
                                     @else
@@ -131,23 +125,9 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                @if($invest->profit_type != 0)
-                                    <label>@lang('Profit')</label>
-                                    <div class="input-group mb-3">
-                                        <input type="hidden" value="" name="invest_amont" class="invest_amount">
-                                        <input type="text" name="get_profit" id="actualGetProfit" class="form-control edit_time" value="{{ count($investedUser) > 0 ? old('get_profit', (int)optional($invest->property)->profit) : old('get_profit') }}" placeholder="@lang('0')">
-                                        <div class="input-group-append">
-                                            <select name="time_type" id="edit_time_type" class="form-control edit_time_type">
-                                                <option value="1" >%</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                <label>@lang('Pay Amount') @if($invest->profit_type == 0) (@lang('Fixed')) @endif</label>
                                 <div class="input-group mb-3">
                                     <input type="text" name="amount" class="form-control edit_time pay_amount"
-                                           value="{{ count($investedUser) > 0 ? old('amount', $invest->net_profit) : old('amount') }}">
+                                           value="">
                                     <div class="input-group-append">
                                         <span class="input-group-text">@lang(config('basic.currency_symbol'))</span>
                                     </div>
@@ -196,8 +176,8 @@
         'use strict'
         $(document).ready(function () {
             $(document).on('click', '.investPaymentSingleUser', function () {
-                let investAmount = $(this).data('amount');
-                $('.invest_amount').val(investAmount);
+                let dataProperty = $(this).data('property');
+                $('.pay_amount').val(dataProperty.net_profit);
                 $('#investPaymentSingleUserForm').attr('action', $(this).data('route'))
             })
 

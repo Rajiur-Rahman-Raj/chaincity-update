@@ -15,10 +15,11 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">@lang('Property')</th>
-                        <th scope="col">@lang('Expire Time')</th>
+                        <th scope="col">@lang('Investment Expire Time')</th>
                         <th scope="col">@lang('Invested User')</th>
-                        <th scope="col">@lang('Invested Amount')</th>
-                        <th scope="col">@lang('Disbursement Type')</th>
+                        <th scope="col">@lang('Total Invested Amount')</th>
+                        <th scope="col">@lang('Need Investment Amount')</th>
+                        <th scope="col">@lang('Profit Return Disbursement Type')</th>
                         <th scope="col">@lang('Action')</th>
                     </tr>
                     </thead>
@@ -43,7 +44,7 @@
                                 </a>
                             </td>
 
-                            <td data-label="@lang('Expire time')">
+                            <td data-label="@lang('Investment Expire Time')">
                                 @if(optional($invest->property)->expire_date)
                                     {{ dateTime(optional($invest->property)->expire_date) }}
                                 @endif
@@ -55,14 +56,18 @@
                                         class="custom-badge bg-success badge-pill">{{ optional($invest->property)->totalRunningInvestUserAndAmount()['totalInvestedUser'] }}</span></a>
                             </td>
 
-                            <td data-label="@lang('Invested Amount')">
+                            <td data-label="@lang('Total Invested Amount')">
                                 {{ config('basic.currency_symbol') }}{{ optional($invest->property)->totalRunningInvestUserAndAmount()['totalInvestedAmount'] }}
                             </td>
 
-                            <td data-label="@lang('Disbursement Type')">
+                            <td data-label="@lang('Need Investment Amount')">
+                                {{ config('basic.currency_symbol') }}{{ optional($invest->property)->total_investment_amount }}
+                            </td>
+
+                            <td data-label="@lang('Profit Return Disbursement Type')">
                                 <input data-toggle="toggle" id="disbursement_type" class="disbursement_type"
                                        data-onstyle="success"
-                                       data-offstyle="info" data-on="Manual" data-off="Automatic" data-width="70%"
+                                       data-offstyle="info" data-on="Manual Payment" data-off="Automatic Payment" data-width="70%"
                                        type="checkbox"
                                        {{ optional($invest->property)->is_payment == 0 ? 'checked' : '' }} name="disbursement_type"
                                        data-id="{{ optional($invest->property)->id }}">
@@ -118,6 +123,7 @@
                     isval: isVal,
                 },
                 success: function (data) {
+                    window.location.reload();
                 },
             });
         });

@@ -53,7 +53,7 @@ class InvestmentController extends Controller
     public function investPaymentAllUser(Request $request, $id)
     {
 
-        $property = ManageProperty::with(['getInvestment', 'getInvestment.user', 'details'])->find($id);
+        $property = ManageProperty::with(['getInvestment', 'getInvestment.user', 'details'])->where('status', 1)->find($id);
 
         $returnTimeType = strtolower(optional($property->managetime)->time_type);
 
@@ -63,41 +63,45 @@ class InvestmentController extends Controller
 
         $basic = (object)config('basic');
 
+        if ($request->profit_return_date <= $now){
+            DB::table('investments')->where('property_id', $property->id)
+                ->where('status', 0)->where('is_active', 1)->where('invest_status', 1)
+                ->where('return_date', '<=', now())
+                ->orderBy('id')->chunk(50, function ($allInvest) use ($returnTimeType, $func, $now, $basic, $property, $request) {
+                    foreach ($allInvest as $investment) {
+                        $returnTime = (int)optional($property->managetime)->time;
+                        $nextReturnDate = now()->$func($returnTime);
+                        $lastReturnDate = now();
+                        $amount = ($investment->profit_type == 1) ? $request->get_profit : ($investment->amount * $request->get_profit) / 100;
 
-        DB::table('investments')->where('property_id', $property->id)
-            ->where('status', 0)->where('is_active', 1)->where('invest_status', 1)
-            ->where('return_date', '<', now())
-            ->orderBy('id')->chunk(50, function ($allInvest) use ($returnTimeType, $func, $now, $basic, $property, $request) {
-                foreach ($allInvest as $investment) {
-                    $returnTime = (int)optional($property->managetime)->time;
-                    $nextReturnDate = now()->$func($returnTime);
-                    $lastReturnDate = now();
+                        if ($investment->profit_type == 0) {
+                            $records['profit'] = $amount;
+                        } else {
+                            $records['net_profit'] = $amount;
+                        }
 
-                    $amount = ($investment->profit_type == 0) ? $request->amount : ($investment->amount * $request->get_profit) / 100;
+                        $records['return_date'] = $nextReturnDate;
+                        $records['last_return_date'] = $lastReturnDate;
 
-                    if ($investment->profit_type == 0) {
-                        $records['profit'] = $amount;
-                    } else {
-                        $records['net_profit'] = $amount;
+                        $data = DB::table('investments')
+                            ->where('id', $investment->id)
+                            ->update($records);
+
+                        InvestmentService::investmentProfitReturn($request, $investment, $nextReturnDate, $lastReturnDate, $now, $basic, $amount);
+
+                        if ($basic->profit_commission == 1) {
+                            $user = User::find($investment->user_id);
+                            BasicService::setBonus($user, $amount, 'profit_commission');
+                        }
                     }
+                });
 
-                    $records['return_date'] = $nextReturnDate;
-                    $records['last_return_date'] = $lastReturnDate;
-                    DB::table('investments')
-                        ->where('id', $investment->id)
-                        ->update($records);
-
-                    InvestmentService::investmentProfitReturn($request, $investment, $nextReturnDate, $lastReturnDate, $now, $basic, $amount);
-
-                    if ($basic->profit_commission == 1) {
-                        $user = User::find($investment->user_id);
-                        BasicService::setBonus($user, $amount, 'profit_commission');
-                    }
-                }
-            });
+            return back()->with('success', 'Profit return successfully completed to all investors for this property');
+        }else{
+            return back()->with('error', "The profit date does not match with today's date. The profit date must be equal or less than today's date.");
+        }
 
 
-        return back()->with('success', 'Payment successfully completed');
     }
 
 

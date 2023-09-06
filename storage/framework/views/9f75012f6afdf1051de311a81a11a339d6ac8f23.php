@@ -16,8 +16,8 @@
                         <th scope="col"><?php echo app('translator')->get('User'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Invested Amount'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Profit'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Return Date'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Payment Status'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Profit Return Date'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Profit Return Times'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Action'); ?></th>
                     </tr>
                     </thead>
@@ -60,7 +60,7 @@
 
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Return Date'); ?>">
+                            <td data-label="<?php echo app('translator')->get('Profit Return Date'); ?>">
                                 <?php if($invest->how_many_times != 0 && $invest->how_many_times != null && $invest->return_date != null): ?>
                                     <?php echo e(customDate($invest->return_date)); ?>
 
@@ -72,7 +72,7 @@
                                 <?php endif; ?>
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Payment Status'); ?>">
+                            <td data-label="<?php echo app('translator')->get('Profit Return Times'); ?>">
                                 <?php if($invest->how_many_times == 0 && $invest->status == 1): ?>
                                     <span class="custom-badge bg-success badge-pill"><?php echo app('translator')->get('Completed'); ?></span>
                                 <?php elseif($invest->how_many_times == null && $invest->status == 0): ?>
@@ -85,22 +85,15 @@
 
                             <td data-label="<?php echo app('translator')->get('Action'); ?>">
                                 <?php if(($invest->how_many_times == null || $invest->how_many_times != 0) && $invest->status == 0 ): ?>
-                                    <?php
-                                        $todayDate = \Carbon\Carbon::now()->format('Y-m-d');
-                                        $expireDate = \Carbon\Carbon::parse(optional($invest->property)->expire_date)->format('Y-m-d');
-                                        $returnDate = \Carbon\Carbon::parse($invest->return_date)->format('Y-m-d');
-                                    ?>
-
-                                    <?php if($todayDate > $expireDate && optional($invest->property)->is_payment == 0): ?>
-                                        <button class="btn btn-sm  btn-outline-primary btn-rounded btn-sm investPaymentSingleUser <?php echo e($todayDate != $returnDate ? 'disabled' : ''); ?>" <?php echo e($todayDate != $returnDate ? 'disabled' : ''); ?>
-
+                                    <?php if(now()->gt(optional($invest->property)->expire_date) && optional($invest->property)->is_payment == 0): ?>
+                                        <button class="btn btn-sm  btn-outline-primary btn-rounded btn-sm investPaymentSingleUser "
                                                 type="button"
                                                 data-route="<?php echo e(route('admin.investPaymentSingleUser', $invest->id)); ?>"
-                                                data-amount="<?php echo e($invest->amount); ?>"
+                                                data-property="<?php echo e($invest); ?>"
                                                 data-toggle="modal"
                                                 data-target="#investPaymentSingleUserModal">
                                             <span>
-                                                <i class="fa fa-credit-card"></i> <?php echo app('translator')->get(' Pay'); ?>
+                                                <i class="fa fa-credit-card"></i> <?php echo app('translator')->get(' Pay Manually Single User'); ?>
                                             </span>
                                         </button>
                                     <?php else: ?>
@@ -136,23 +129,9 @@
                         <?php echo csrf_field(); ?>
                         <div class="modal-body">
                             <div class="form-group">
-                                <?php if($invest->profit_type != 0): ?>
-                                    <label><?php echo app('translator')->get('Profit'); ?></label>
-                                    <div class="input-group mb-3">
-                                        <input type="hidden" value="" name="invest_amont" class="invest_amount">
-                                        <input type="text" name="get_profit" id="actualGetProfit" class="form-control edit_time" value="<?php echo e(count($investedUser) > 0 ? old('get_profit', (int)optional($invest->property)->profit) : old('get_profit')); ?>" placeholder="<?php echo app('translator')->get('0'); ?>">
-                                        <div class="input-group-append">
-                                            <select name="time_type" id="edit_time_type" class="form-control edit_time_type">
-                                                <option value="1" >%</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-
-                                <label><?php echo app('translator')->get('Pay Amount'); ?> <?php if($invest->profit_type == 0): ?> (<?php echo app('translator')->get('Fixed'); ?>) <?php endif; ?></label>
                                 <div class="input-group mb-3">
                                     <input type="text" name="amount" class="form-control edit_time pay_amount"
-                                           value="<?php echo e(count($investedUser) > 0 ? old('amount', $invest->net_profit) : old('amount')); ?>">
+                                           value="">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><?php echo app('translator')->get(config('basic.currency_symbol')); ?></span>
                                     </div>
@@ -201,8 +180,8 @@
         'use strict'
         $(document).ready(function () {
             $(document).on('click', '.investPaymentSingleUser', function () {
-                let investAmount = $(this).data('amount');
-                $('.invest_amount').val(investAmount);
+                let dataProperty = $(this).data('property');
+                $('.pay_amount').val(dataProperty.net_profit);
                 $('#investPaymentSingleUserForm').attr('action', $(this).data('route'))
             })
 

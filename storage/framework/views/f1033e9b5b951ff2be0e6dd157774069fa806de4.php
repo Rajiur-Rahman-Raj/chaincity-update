@@ -14,10 +14,11 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col"><?php echo app('translator')->get('Property'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Expire Time'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Investment Expire Time'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Invested User'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Invested Amount'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Disbursement Type'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Total Invested Amount'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Need Investment Amount'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Profit Return Disbursement Type'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Action'); ?></th>
                     </tr>
                     </thead>
@@ -42,7 +43,7 @@
                                 </a>
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Expire time'); ?>">
+                            <td data-label="<?php echo app('translator')->get('Investment Expire Time'); ?>">
                                 <?php if(optional($invest->property)->expire_date): ?>
                                     <?php echo e(dateTime(optional($invest->property)->expire_date)); ?>
 
@@ -55,15 +56,20 @@
                                         class="custom-badge bg-success badge-pill"><?php echo e(optional($invest->property)->totalRunningInvestUserAndAmount()['totalInvestedUser']); ?></span></a>
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Invested Amount'); ?>">
+                            <td data-label="<?php echo app('translator')->get('Total Invested Amount'); ?>">
                                 <?php echo e(config('basic.currency_symbol')); ?><?php echo e(optional($invest->property)->totalRunningInvestUserAndAmount()['totalInvestedAmount']); ?>
 
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Disbursement Type'); ?>">
+                            <td data-label="<?php echo app('translator')->get('Need Investment Amount'); ?>">
+                                <?php echo e(config('basic.currency_symbol')); ?><?php echo e(optional($invest->property)->total_investment_amount); ?>
+
+                            </td>
+
+                            <td data-label="<?php echo app('translator')->get('Profit Return Disbursement Type'); ?>">
                                 <input data-toggle="toggle" id="disbursement_type" class="disbursement_type"
                                        data-onstyle="success"
-                                       data-offstyle="info" data-on="Manual" data-off="Automatic" data-width="70%"
+                                       data-offstyle="info" data-on="Manual Payment" data-off="Automatic Payment" data-width="70%"
                                        type="checkbox"
                                        <?php echo e(optional($invest->property)->is_payment == 0 ? 'checked' : ''); ?> name="disbursement_type"
                                        data-id="<?php echo e(optional($invest->property)->id); ?>">
@@ -119,6 +125,7 @@
                     isval: isVal,
                 },
                 success: function (data) {
+                    window.location.reload();
                 },
             });
         });

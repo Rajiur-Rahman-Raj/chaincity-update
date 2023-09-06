@@ -3,10 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="c042b20e-ac07-4823-acfc-5307c5c6efae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ManageProperty.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ManageProperty.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/dueInvestedUserList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/dueInvestedUserList.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/ovsUNdAxm037AxNkEGERkwVo2aP5xe4bI1oj2pSK" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/InvestmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/InvestmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/expiredInvestmentList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/expiredInvestmentList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/investedUserList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/investedUserList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/runningInvestmentList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/runningInvestmentList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/sgHNqw5AU8DM7PrJ1iUMAF9pyAW3WlLOEn89LLhG" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/sessions/sgHNqw5AU8DM7PrJ1iUMAF9pyAW3WlLOEn89LLhG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/9f75012f6afdf1051de311a81a11a339d6ac8f23.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/9f75012f6afdf1051de311a81a11a339d6ac8f23.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/views/f1033e9b5b951ff2be0e6dd157774069fa806de4.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/f1033e9b5b951ff2be0e6dd157774069fa806de4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,7 +194,7 @@
       <option name="presentableId" value="Default" />
       <updated>1693896385217</updated>
       <workItem from="1693896386617" duration="18108000" />
-      <workItem from="1693974761878" duration="11221000" />
+      <workItem from="1693974761878" duration="23846000" />
     </task>
     <servers />
   </component>

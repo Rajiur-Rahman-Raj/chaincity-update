@@ -14,14 +14,14 @@
                 <table class="categories-show-table table table-hover table-striped" id="zero_config">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">@lang('Property')</th>
-                        <th scope="col">@lang('Expire Date')</th>
-                        <th scope="col">@lang('Invested User')</th>
-                        <th scope="col">@lang('Invested Amount')</th>
-                        <th scope="col">@lang('Profit Date')</th>
-                        <th scope="col">@lang('Payment Status')</th>
-                        <th scope="col">@lang('Disbursement Type')</th>
-                        <th scope="col">@lang('Action')</th>
+                        <th scope="col" class="font-13">@lang('Property')</th>
+                        <th scope="col" class="font-13">@lang('Expire Date')</th>
+                        <th scope="col" class="font-13">@lang('Invested User')</th>
+                        <th scope="col" class="font-13">@lang('Total Invested Amount')</th>
+                        <th scope="col" class="font-13">@lang('Profit Return Date')</th>
+                        <th scope="col" class="font-13">@lang('Profit Return Times')</th>
+                        <th scope="col" class="font-13">@lang('Profit Return Disbursement Type')</th>
+                        <th scope="col" class="font-13">@lang('Action')</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -57,23 +57,23 @@
                             </td>
 
 
-                            <td data-label="@lang('Profit Date')">
+                            <td data-label="@lang('Profit Return Date')">
                                 {{ customDate($invest->return_date) }}
                             </td>
 
-                            <td data-label="@lang('Payment Status')">
+                            <td data-label="@lang('Profit Return Times')">
                                 @if($invest->how_many_times == 0 && $invest->status == 1)
                                     <span class="custom-badge bg-success badge-pill">@lang('Completed')</span>
                                 @elseif($invest->how_many_times == null && $invest->status == 0)
-                                    <span class="custom-badge bg-success badge-pill">@lang('Unlimited')</span>
+                                    <span class="custom-badge bg-success badge-pill">@lang('Life Time')</span>
                                 @else
                                     <span class="custom-badge bg-success badge-pill">{{ $invest->how_many_times }}@lang(' times')</span>
                                 @endif
                             </td>
 
-                            <td data-label="@lang('Disbursement Type')">
+                            <td data-label="@lang('Profit Return Disbursement Type')">
                                 <input data-toggle="toggle" id="disbursement_type" class="disbursement_type" data-onstyle="success"
-                                       data-offstyle="info" data-on="Manual" data-off="Automatic" data-width="100%"
+                                       data-offstyle="info" data-on="Manual Payment" data-off="Automatic Payment" data-width="100%"
                                        type="checkbox" {{ optional($invest->property)->is_payment == 0 ? 'checked' : '' }} name="disbursement_type" data-id="{{ optional($invest->property)->id }}">
                             </td>
 
@@ -83,21 +83,15 @@
                                     <i class="far fa-eye"></i>
                                 </a>
 
-                                @php
-                                    $todayDate = \Carbon\Carbon::now()->format('Y-m-d');
-                                    $returnDate = \Carbon\Carbon::parse($invest->return_date)->format('Y-m-d');
-                                @endphp
-
-
                                 @if(($invest->how_many_times == null || $invest->how_many_times != 0) && $invest->status == 0 && optional($invest->property)->is_payment == 0)
-                                    <button class="btn btn-sm btn-outline-primary btn-rounded btn-sm investPaymentAllUser {{ $todayDate != $returnDate ? 'disabled' : '' }}" {{ $todayDate != $returnDate ? 'disabled' : '' }}
+                                    <button class="btn btn-sm btn-outline-primary btn-rounded btn-sm investPaymentAllUser"
                                     type="button"
                                             data-route="{{ route('admin.investPaymentAllUser', optional($invest->property)->id) }}"
-                                            data-amount="{{ $invest->amount }}"
+                                            data-property="{{ $invest }}"
                                             data-toggle="modal"
                                             data-target="#investPaymentAllUserModal">
                                         <span>
-                                            <i class="fa fa-credit-card"></i> @lang(' Pay')
+                                            <i class="fa fa-credit-card"></i> @lang(' Pay manually all investor')
                                         </span>
                                     </button>
                                 @endif
@@ -118,7 +112,7 @@
         <div class="modal-dialog " role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">@lang('Payment now')</h5>
+                    <h5 class="modal-title">@lang('Return profit to all investor')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -129,27 +123,16 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                @if($invest->profit_type != 0)
-                                    <label>@lang('Profit')</label>
+                                    <label>@lang('Return Profit')</label>
                                     <div class="input-group mb-3">
-                                        <input type="hidden" value="" name="invest_amont" class="invest_amount">
-                                        <input type="text" name="get_profit" id="actualGetProfit" class="form-control edit_time" value="{{ count($investments) > 0 ? old('get_profit', (int)optional($invest->property)->profit) : old('get_profit') }}" placeholder="@lang('0')">
+                                        <input type="hidden" name="profit_return_date" value="" class="profit_return_date">
+                                        <input type="text" name="get_profit" id="actualGetProfit" class="form-control" value="" placeholder="@lang('0')">
                                         <div class="input-group-append">
-                                            <select name="time_type" id="edit_time_type" class="form-control edit_time_type">
-                                                <option value="1" >%</option>
+                                            <select name="get_profit_type" id="actualGetProfitType" class="form-control actualGetProfitType">
+
                                             </select>
                                         </div>
                                     </div>
-                                @endif
-
-                                <label>@lang('Pay Amount') @if($invest->profit_type == 0) (@lang('Fixed')) @endif</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" name="amount" class="form-control edit_time pay_amount"
-                                           value="{{ $invest->profit_type == 0 ? $invest->profit : $invest->net_profit }}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">@lang(config('basic.currency_symbol'))</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -189,18 +172,17 @@
         "use strict";
         $(document).ready(function () {
             $(document).on('click', '.investPaymentAllUser', function () {
-                let investAmount = $(this).data('amount');
-                $('.invest_amount').val(investAmount);
+                let dataProperty = $(this).data('property');
+                $('#actualGetProfit').val(dataProperty.property.profit);
+                $('.profit_return_date').val(dataProperty.return_date)
+                if (dataProperty.property.profit_type == 1){
+                    $('#actualGetProfitType').append(`<option value="1" >%</option>`)
+                }else{
+                    $('#actualGetProfitType').append(`<option value="0" >$</option>`)
+                }
+
                 $('#investPaymentAllUserForm').attr('action', $(this).data('route'))
             })
-
-            $(document).on('input', '#actualGetProfit', function () {
-                let actual_profit = $('#actualGetProfit').val();
-                let investAmount = $('.invest_amount').val();
-                let actualAmount = investAmount * actual_profit / 100;
-                let netActualAmount = actualAmount.toFixed(2);
-                $('.pay_amount').val(netActualAmount);
-            });
 
             $(document).on('change','#disbursement_type', function () {
 
