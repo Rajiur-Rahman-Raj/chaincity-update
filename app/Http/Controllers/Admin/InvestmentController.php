@@ -52,6 +52,7 @@ class InvestmentController extends Controller
 
     public function investPaymentAllUser(Request $request, $id)
     {
+        @dd('i am here 9-06-2023');
 
         $property = ManageProperty::with(['getInvestment', 'getInvestment.user', 'details'])->where('status', 1)->find($id);
 
