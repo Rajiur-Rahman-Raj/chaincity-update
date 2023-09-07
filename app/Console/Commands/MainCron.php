@@ -50,9 +50,8 @@ class MainCron extends Command
         $request = null;
 
         $manageProperties = ManageProperty::with(['getInvestment', 'getInvestment.user', 'details'])->where('is_payment', 1)->where('status', 1)->get();
-        
-foreach ($manageProperties as $property) {
 
+        foreach ($manageProperties as $property) {
             $returnTimeType = strtolower(optional($property->managetime)->time_type);
             $func = $returnTimeType == 'days' ? 'addDays' : ($returnTimeType == 'months' ? 'addMonths' : 'addYears');
 
@@ -60,14 +59,12 @@ foreach ($manageProperties as $property) {
                 ->where('status', 0)->where('is_active', 1)->where('invest_status', 1)
                 ->whereDate('return_date', '<=', now())
                 ->orderBy('id')->chunk(50, function ($allInvest) use ($returnTimeType, $func, $now, $basic, $property, $request) {
-                    
-                    
                     foreach ($allInvest as $investment) {
                         $returnTime = (int)optional($property->managetime)->time;
                         $nextReturnDate = now()->$func($returnTime);
                         $lastReturnDate = now();
 
-                        $amount = $investment->profit_type == 0 ? (int)$investment->profit : (int)$investment->net_profit;
+                        $amount = $investment->profit_type == 0 ? @$investment->profit : @$investment->net_profit;
 
                         if ($investment->profit_type == 0) {
                             $records['profit'] = $amount;

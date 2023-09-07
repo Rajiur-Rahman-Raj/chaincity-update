@@ -52,7 +52,6 @@ class InvestmentController extends Controller
 
     public function investPaymentAllUser(Request $request, $id)
     {
-        @dd('i am here 9-06-2023');
 
         $property = ManageProperty::with(['getInvestment', 'getInvestment.user', 'details'])->where('status', 1)->find($id);
 
@@ -60,20 +59,23 @@ class InvestmentController extends Controller
 
         $func = $returnTimeType == 'days' ? 'addDays' : ($returnTimeType == 'months' ? 'addMonths' : 'addYears');
 
+
         $now = now();
 
         $basic = (object)config('basic');
 
         if ($request->profit_return_date <= $now){
+
             DB::table('investments')->where('property_id', $property->id)
                 ->where('status', 0)->where('is_active', 1)->where('invest_status', 1)
                 ->where('return_date', '<=', now())
                 ->orderBy('id')->chunk(50, function ($allInvest) use ($returnTimeType, $func, $now, $basic, $property, $request) {
+
                     foreach ($allInvest as $investment) {
                         $returnTime = (int)optional($property->managetime)->time;
                         $nextReturnDate = now()->$func($returnTime);
                         $lastReturnDate = now();
-                        $amount = ($investment->profit_type == 1) ? $request->get_profit : ($investment->amount * $request->get_profit) / 100;
+                        $amount = ($investment->profit_type == 0) ? $request->get_profit : ($investment->amount * $request->get_profit) / 100;
 
                         if ($investment->profit_type == 0) {
                             $records['profit'] = $amount;
@@ -84,7 +86,7 @@ class InvestmentController extends Controller
                         $records['return_date'] = $nextReturnDate;
                         $records['last_return_date'] = $lastReturnDate;
 
-                        $data = DB::table('investments')
+                        DB::table('investments')
                             ->where('id', $investment->id)
                             ->update($records);
 
@@ -108,30 +110,33 @@ class InvestmentController extends Controller
 
     public function investPaymentSingleUser(Request $request, $id)
     {
-
-        $investment = Investment::with('user', 'property.details')->where('status', 0)->findOrFail($id);
+        $investment = Investment::with('user', 'property.details')->where('status', 0)->where('invest_status', 1)->where('is_active', 1)->findOrFail($id);
 
         $returnTimeType = strtolower(optional($investment->property->managetime)->time_type);
+
         $func = $returnTimeType == 'days' ? 'addDays' : ($returnTimeType == 'months' ? 'addMonths' : 'addYears');
+
         $now = Carbon::parse(Carbon::now());
-        $basic = (object)config('basic');
 
-        $returnTime = (int)optional($investment->property->managetime)->time;
-        $nextReturnDate = now()->$func($returnTime);
-        $lastReturnDate = now();
+        if ($investment->return_date <= $now){
+            $basic = (object)config('basic');
 
+            $returnTime = (int)optional($investment->property->managetime)->time;
+            $nextReturnDate = now()->$func($returnTime);
+            $lastReturnDate = now();
 
-        $amount = $investment->amount * $request->get_profit / 100;
-        $investment->net_profit = $amount;
-        $investment->save();
-        InvestmentService::investmentProfitReturn($request, $investment, $nextReturnDate, $lastReturnDate, $now, $basic, $amount);
+            $amount = $request->amount;
+            InvestmentService::investmentProfitReturn($request, $investment, $nextReturnDate, $lastReturnDate, $now, $basic, $amount);
 
-        $user = $investment->user;
-        if ($basic->profit_commission == 1) {
-            BasicService::setBonus($user, $amount, $type = 'profit_commission');
+            $user = $investment->user;
+            if ($basic->profit_commission == 1) {
+                BasicService::setBonus($user, $amount, $type = 'profit_commission');
+            }
+
+            return back()->with('success', 'Profit return is successfully completed to '.$user->fullname);
+        }else{
+            return back()->with('error', "The profit date does not match with today's date. The profit date must be equal or less than today's date.");
         }
-
-        return back()->with('success', 'Payment Successfully Completed');
     }
 
 

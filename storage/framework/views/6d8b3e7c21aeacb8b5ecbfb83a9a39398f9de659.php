@@ -14,12 +14,12 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col" class="font-13"><?php echo app('translator')->get('Property'); ?></th>
-                        <th scope="col" class="font-13"><?php echo app('translator')->get('Expire Date'); ?></th>
+                        <th scope="col" class="font-13"><?php echo app('translator')->get('Investment Expire Date'); ?></th>
                         <th scope="col" class="font-13"><?php echo app('translator')->get('Invested User'); ?></th>
                         <th scope="col" class="font-13"><?php echo app('translator')->get('Total Invested Amount'); ?></th>
                         <th scope="col" class="font-13"><?php echo app('translator')->get('Profit Return Date'); ?></th>
-                        <th scope="col" class="font-13"><?php echo app('translator')->get('Profit Return Times'); ?></th>
-                        <th scope="col" class="font-13"><?php echo app('translator')->get('Profit Return Disbursement Type'); ?></th>
+                        <th scope="col" class="font-13"><?php echo app('translator')->get('Return Times'); ?></th>
+                        <th scope="col" class="font-13"><?php echo app('translator')->get('Return Disbursement Type'); ?></th>
                         <th scope="col" class="font-13"><?php echo app('translator')->get('Action'); ?></th>
                     </tr>
                     </thead>
@@ -58,12 +58,12 @@
                             </td>
 
 
-                            <td data-label="<?php echo app('translator')->get('Profit Return Date'); ?>">
-                                <?php echo e(customDate($invest->return_date)); ?>
+                            <td data-label="<?php echo app('translator')->get('Return Date'); ?>">
+                                <?php echo e(dateTime($invest->return_date)); ?>
 
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Profit Return Times'); ?>">
+                            <td data-label="<?php echo app('translator')->get('Return Times'); ?>">
                                 <?php if($invest->how_many_times == 0 && $invest->status == 1): ?>
                                     <span class="custom-badge bg-success badge-pill"><?php echo app('translator')->get('Completed'); ?></span>
                                 <?php elseif($invest->how_many_times == null && $invest->status == 0): ?>
@@ -125,7 +125,7 @@
                         <?php echo csrf_field(); ?>
                         <div class="modal-body">
                             <div class="form-group">
-                                    <label><?php echo app('translator')->get('Return Profit'); ?></label>
+                                    <label><?php echo app('translator')->get('Return Profit'); ?> <span class="return__profit__type text-primary font-14"></span></label>
                                     <div class="input-group mb-3">
                                         <input type="hidden" name="profit_return_date" value="" class="profit_return_date">
                                         <input type="text" name="get_profit" id="actualGetProfit" class="form-control" value="" placeholder="<?php echo app('translator')->get('0'); ?>">
@@ -175,12 +175,14 @@
         $(document).ready(function () {
             $(document).on('click', '.investPaymentAllUser', function () {
                 let dataProperty = $(this).data('property');
-                $('#actualGetProfit').val(dataProperty.property.profit);
+                $('#actualGetProfit').val(dataProperty.profit);
                 $('.profit_return_date').val(dataProperty.return_date)
                 if (dataProperty.property.profit_type == 1){
                     $('#actualGetProfitType').append(`<option value="1" >%</option>`)
+                    $('.return__profit__type').text(`(percentage)`);
                 }else{
                     $('#actualGetProfitType').append(`<option value="0" >$</option>`)
+                    $('.return__profit__type').text(`(fixed)`);
                 }
 
                 $('#investPaymentAllUserForm').attr('action', $(this).data('route'))

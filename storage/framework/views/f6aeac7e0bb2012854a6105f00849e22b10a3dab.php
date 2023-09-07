@@ -1,5 +1,5 @@
 <?php $__env->startSection('title'); ?>
-    <?php echo app('translator')->get('Due Installment Invested User List'); ?>
+    <?php echo app('translator')->get($title); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -15,10 +15,9 @@
                     <tr>
                         <th scope="col"><?php echo app('translator')->get('User'); ?></th>
                         <th scope="col"><?php echo app('translator')->get('Invested Amount'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Due Amount'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Due Installments'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Installment Last Date'); ?></th>
-                        <th scope="col"><?php echo app('translator')->get('Action'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Profit'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Last Return Date'); ?></th>
+                        <th scope="col"><?php echo app('translator')->get('Profit Return Times'); ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,29 +46,18 @@
 
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Due Amount'); ?>">
-                                <?php echo e(config('basic.currency_symbol')); ?><?php echo e(optional(($invest)->property)->dueInvestmentAmount($invest->amount)); ?>
+                            <td data-label="<?php echo app('translator')->get('Profit'); ?>">
+                                 <?php echo e($basic->currency_symbol); ?><?php echo e($invest->profit_type == 0 ? $invest->profit : $invest->net_profit); ?>
 
                             </td>
 
-                            <td data-label="<?php echo app('translator')->get('Due Installments'); ?>">
-                                <span class="custom-badge badge-pill bg-warning"><?php echo e($invest->due_installments); ?></span>
-                            </td>
-
-                            <td data-label="<?php echo app('translator')->get('Installment Last Date'); ?>">
-                                <?php echo e(customDate($invest->next_installment_date_end)); ?>
+                            <td data-label="<?php echo app('translator')->get('Last Return Date'); ?>">
+                                <?php echo e(dateTime($invest->last_return_date)); ?>
 
                             </td>
 
-
-                            <td data-label="<?php echo app('translator')->get('Action'); ?>">
-                                <a class="btn btn-sm  btn-outline-primary btn-rounded btn-sm investPaymentSingleUser"
-                                   href="<?php echo e(route('admin.send-email',$invest->user_id)); ?>">
-                                    <span>
-                                        <i class="fas fa-envelope-open text-blue"></i> <?php echo app('translator')->get(' Send Mail'); ?>
-                                    </span>
-                                </a>
-
+                            <td data-label="<?php echo app('translator')->get('Profit Return Times'); ?>">
+                                <span class="custom-badge bg-success badge-pill"><?php echo app('translator')->get('Completed'); ?></span>
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -82,6 +70,7 @@
             </div>
         </div>
     </div>
+
 
 <?php $__env->stopSection(); ?>
 
@@ -107,4 +96,4 @@
     <?php endif; ?>
 <?php $__env->stopPush(); ?>
 
-<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xammp\htdocs\chaincity_update\project\resources\views/admin/property/dueInvestedUserList.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xammp\htdocs\chaincity_update\project\resources\views/admin/property/completedInvestedUserList.blade.php ENDPATH**/ ?>

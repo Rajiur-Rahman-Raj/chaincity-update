@@ -162,6 +162,7 @@ class InvestmentService
 
     public function investmentProfitReturn($request, $investment, $nextReturnDate, $lastReturnDate, $now, $basic, $amount = null)
     {
+
         $user = User::where('id', $investment->user_id)->first();
         $investment = Investment::where('id', $investment->id)->first();
 
@@ -172,18 +173,16 @@ class InvestmentService
         }
 
         if ($investment->how_many_times == null) {
-            DB::table('investments')->where('id', $investment->id)->update([
-                'return_date' => $nextReturnDate,
-                'last_return_date' => $lastReturnDate
-            ]);
+
+            $investment->return_date = $nextReturnDate;       // next Profit will get
+            $investment->last_return_date = $lastReturnDate;  // Last Time Get Profit
+            $investment->save();
 
             // Return Amount to user's Interest Balance
-
-            $user->update([
-                    'interest_balance' => DB::raw("interest_balance + $amount"),
-                    'total_interest_balance' => DB::raw("total_interest_balance + $amount"),
-                ]);
-
+            $new_balance = ($user->interest_balance + $amount);
+            $user->interest_balance = $new_balance;
+            $user->total_interest_balance += $amount;
+            $user->save();
 
             $remarks = getAmount($amount) . ' ' . config('basic.currency') . ' Interest From ' . optional($property->details)->property_title;
             $transaction = BasicService::makeTransaction($user, $amount, 0, '+', 'interest_balance', strRandom(), $remarks, $property);
@@ -192,13 +191,12 @@ class InvestmentService
 
         } elseif ($investment->how_many_times != null && $investment->how_many_times != 0) {
 
-            $investment->update([
-                'return_date' => $nextReturnDate,
-                'last_return_date' => $lastReturnDate
-            ]);
+            $investment->return_date = $nextReturnDate;  // next Profit will get
+            $investment->last_return_date = $now;        // Last Time Get Profit
+            $investment->save();
+
 
             // Return Amount to user's Interest Balance
-
             $new_balance = ($user->interest_balance + $amount);
             $user->interest_balance = $new_balance;
             $user->total_interest_balance += $amount;

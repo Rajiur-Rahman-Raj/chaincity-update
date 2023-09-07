@@ -15,12 +15,12 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col" class="font-13">@lang('Property')</th>
-                        <th scope="col" class="font-13">@lang('Expire Date')</th>
+                        <th scope="col" class="font-13">@lang('Investment Expire Date')</th>
                         <th scope="col" class="font-13">@lang('Invested User')</th>
                         <th scope="col" class="font-13">@lang('Total Invested Amount')</th>
                         <th scope="col" class="font-13">@lang('Profit Return Date')</th>
-                        <th scope="col" class="font-13">@lang('Profit Return Times')</th>
-                        <th scope="col" class="font-13">@lang('Profit Return Disbursement Type')</th>
+                        <th scope="col" class="font-13">@lang('Return Times')</th>
+                        <th scope="col" class="font-13">@lang('Return Disbursement Type')</th>
                         <th scope="col" class="font-13">@lang('Action')</th>
                     </tr>
                     </thead>
@@ -57,11 +57,11 @@
                             </td>
 
 
-                            <td data-label="@lang('Profit Return Date')">
-                                {{ customDate($invest->return_date) }}
+                            <td data-label="@lang('Return Date')">
+                                {{ dateTime($invest->return_date) }}
                             </td>
 
-                            <td data-label="@lang('Profit Return Times')">
+                            <td data-label="@lang('Return Times')">
                                 @if($invest->how_many_times == 0 && $invest->status == 1)
                                     <span class="custom-badge bg-success badge-pill">@lang('Completed')</span>
                                 @elseif($invest->how_many_times == null && $invest->status == 0)
@@ -123,7 +123,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                    <label>@lang('Return Profit')</label>
+                                    <label>@lang('Return Profit') <span class="return__profit__type text-primary font-14"></span></label>
                                     <div class="input-group mb-3">
                                         <input type="hidden" name="profit_return_date" value="" class="profit_return_date">
                                         <input type="text" name="get_profit" id="actualGetProfit" class="form-control" value="" placeholder="@lang('0')">
@@ -173,12 +173,14 @@
         $(document).ready(function () {
             $(document).on('click', '.investPaymentAllUser', function () {
                 let dataProperty = $(this).data('property');
-                $('#actualGetProfit').val(dataProperty.property.profit);
+                $('#actualGetProfit').val(dataProperty.profit);
                 $('.profit_return_date').val(dataProperty.return_date)
                 if (dataProperty.property.profit_type == 1){
                     $('#actualGetProfitType').append(`<option value="1" >%</option>`)
+                    $('.return__profit__type').text(`(percentage)`);
                 }else{
                     $('#actualGetProfitType').append(`<option value="0" >$</option>`)
+                    $('.return__profit__type').text(`(fixed)`);
                 }
 
                 $('#investPaymentAllUserForm').attr('action', $(this).data('route'))

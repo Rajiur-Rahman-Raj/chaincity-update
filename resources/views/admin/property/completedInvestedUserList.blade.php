@@ -18,7 +18,7 @@
                         <th scope="col">@lang('Invested Amount')</th>
                         <th scope="col">@lang('Profit')</th>
                         <th scope="col">@lang('Last Return Date')</th>
-                        <th scope="col">@lang('Payment Status')</th>
+                        <th scope="col">@lang('Profit Return Times')</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,14 +47,14 @@
                             </td>
 
                             <td data-label="@lang('Profit')">
-                                {{  $invest->profit_type == 0 ? $invest->profit : $invest->net_profit }}
+                                 {{ $basic->currency_symbol }}{{  $invest->profit_type == 0 ? $invest->profit : $invest->net_profit }}
                             </td>
 
-                            <td data-label="@lang('Return Date')">
-                                {{ $invest->last_return_date }}
+                            <td data-label="@lang('Last Return Date')">
+                                {{ dateTime($invest->last_return_date) }}
                             </td>
 
-                            <td data-label="@lang('Payment Status')">
+                            <td data-label="@lang('Profit Return Times')">
                                 <span class="custom-badge bg-success badge-pill">@lang('Completed')</span>
                             </td>
                         </tr>

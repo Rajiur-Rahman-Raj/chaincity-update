@@ -15,11 +15,11 @@
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">@lang('Property')</th>
-                        <th scope="col">@lang('Expire Date')</th>
+                        <th scope="col">@lang('Investment Expire Date')</th>
                         <th scope="col">@lang('Invested User')</th>
                         <th scope="col">@lang('Invested Amount')</th>
                         <th scope="col">@lang('Last Return Date')</th>
-                        <th scope="col">@lang('Payment Status')</th>
+                        <th scope="col">@lang('Profit Return Times')</th>
                         <th scope="col">@lang('Action')</th>
                     </tr>
                     </thead>
@@ -57,7 +57,7 @@
 
 
                             <td data-label="@lang('Last Return Date')">
-                                {{ customDate($invest->last_return_date) }}
+                                {{ dateTime($invest->last_return_date) }}
                             </td>
 
                             <td data-label="@lang('Payment Status')">
