@@ -26,7 +26,8 @@
                         </div>
 
                         <div class="text-box">
-                            <div class="review">
+                            <div class="review-header d-flex justify-content-between">
+                                <div class="review">
                                 <span>
                                     @php
                                         $isCheck = 0;
@@ -58,8 +59,13 @@
                                     @endif
                                 </span>
 
-                                <span>({{ count($offerProperty->property->getReviews) <= 1 ? (count($offerProperty->property->getReviews). trans(' review')) : (count($offerProperty->property->getReviews). trans(' reviews')) }})</span>
+                                    <span>({{ count($offerProperty->property->getReviews) <= 1 ? (count($offerProperty->property->getReviews). trans(' review')) : (count($offerProperty->property->getReviews). trans(' reviews')) }})</span>
+                                </div>
+                                <div class="owner">
+                                    @lang('Owner: ') @lang(optional($offerProperty->owner)->fullname)
+                                </div>
                             </div>
+
 
                             <a class="title"
                                href="{{ route('propertyDetails',[slug(optional(optional($offerProperty->property)->details)->property_title), optional($offerProperty->property)->id]) }}">{{ Str::limit(optional(optional($offerProperty->property)->details)->property_title, 30)  }}</a>

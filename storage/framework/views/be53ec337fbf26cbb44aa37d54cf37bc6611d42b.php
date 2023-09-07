@@ -15,7 +15,8 @@
                         </div>
 
                         <div class="text-box">
-                            <div class="review">
+                            <div class="review-header d-flex justify-content-between">
+                                <div class="review">
                                 <span>
                                     <?php
                                         $isCheck = 0;
@@ -47,7 +48,11 @@
                                     <?php endif; ?>
                                 </span>
 
-                                <span>(<?php echo e(count($shareProperty->property->getReviews) <= 1 ? (count($shareProperty->property->getReviews). trans(' review')) : (count($shareProperty->property->getReviews). trans(' reviews'))); ?>)</span>
+                                    <span>(<?php echo e(count($shareProperty->property->getReviews) <= 1 ? (count($shareProperty->property->getReviews). trans(' review')) : (count($shareProperty->property->getReviews). trans(' reviews'))); ?>)</span>
+                                </div>
+                                <div class="owner">
+                                    <?php echo app('translator')->get('Owner: '); ?> <?php echo app('translator')->get(optional($shareProperty->user)->fullname); ?>
+                                </div>
                             </div>
 
                             <a class="title"

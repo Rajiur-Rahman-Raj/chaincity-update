@@ -26,7 +26,8 @@
                         </div>
 
                         <div class="text-box">
-                            <div class="review">
+                            <div class="review-header d-flex justify-content-between">
+                                <div class="review">
                                 <span>
                                     <?php
                                         $isCheck = 0;
@@ -58,8 +59,13 @@
                                     <?php endif; ?>
                                 </span>
 
-                                <span>(<?php echo e(count($offerProperty->property->getReviews) <= 1 ? (count($offerProperty->property->getReviews). trans(' review')) : (count($offerProperty->property->getReviews). trans(' reviews'))); ?>)</span>
+                                    <span>(<?php echo e(count($offerProperty->property->getReviews) <= 1 ? (count($offerProperty->property->getReviews). trans(' review')) : (count($offerProperty->property->getReviews). trans(' reviews'))); ?>)</span>
+                                </div>
+                                <div class="owner">
+                                    <?php echo app('translator')->get('Owner: '); ?> <?php echo app('translator')->get(optional($offerProperty->owner)->fullname); ?>
+                                </div>
                             </div>
+
 
                             <a class="title"
                                href="<?php echo e(route('propertyDetails',[slug(optional(optional($offerProperty->property)->details)->property_title), optional($offerProperty->property)->id])); ?>"><?php echo e(Str::limit(optional(optional($offerProperty->property)->details)->property_title, 30)); ?></a>

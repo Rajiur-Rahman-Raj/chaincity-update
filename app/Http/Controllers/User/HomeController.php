@@ -1898,6 +1898,7 @@ class HomeController extends Controller
         $data['myOfferedProperties'] = PropertyOffer::with(['getInvestment.propertyShare', 'property.getReviews', 'propertyShare'])->where('offered_from', $this->user->id)->latest()->paginate(config('basic.paginate'));
 
         $data['receivedOfferedList'] = PropertyOffer::with(['getInvestment.propertyShare', 'property.getReviews', 'propertyShare', 'owner', 'user'])->where('offered_to', $this->user->id)->withCount('propertyShare')->groupBy('property_share_id')->latest()->paginate(config('basic.paginate'));
+
         return view($this->theme . 'user.property.index', $data, compact('type'));
     }
 
@@ -2084,13 +2085,16 @@ class HomeController extends Controller
 
     public function paymentLockConfirm(Request $request, $id)
     {
+
         $this->validate($request, [
             'balance_type' => 'required|string|max:50',
             'amount' => 'required|numeric',
         ]);
 
+
         $balance_type = $request->balance_type;
-        if (!in_array($balance_type, ['balance', 'interest_balance', 'checkout'])) {
+
+        if (!in_array($balance_type, ['balance', 'interest_balance'])) {
             return back()->with('error', 'Invalid Wallet Type');
         }
 
@@ -2098,23 +2102,24 @@ class HomeController extends Controller
             return back()->with('error', 'Payment duration time is expired');
         }
 
-
-        $user = $this->user;
+        $buyer = $this->user;
         $offerLock = OfferLock::with('propertyOffer.property.details', 'propertyOffer.getInvestment', 'propertyOffer.propertyShare')->findOrFail($id);
         $amount = $offerLock->lock_amount;
 
-        if ($amount > $user->$balance_type) {
+        if ($amount > $buyer[$balance_type]) {
             return back()->with('error', 'Insufficient Balance');
         }
 
-        $new_balance = getAmount($user->$balance_type - $amount); // new balance = user new balance
-        $user->$balance_type = $new_balance;
-        $user->total_invest += $request->amount;
-        $user->save();
+
+        // balance deduct from buyer
+        $new_balance = $buyer[$balance_type] - $amount; // new balance = user new balance
+        $buyer[$balance_type] = $new_balance;
+        $buyer->total_invest += $request->amount;
+        $buyer->save();
         $trx = strRandom();
         $remarks = 'Share purchesed on ' . optional(optional(optional($offerLock->propertyOffer)->property)->details)->property_title;
 
-        BasicService::makeTransaction($user, $amount, 0, $trx_type = '-', $balance_type, $trx, $remarks);
+        BasicService::makeTransaction($buyer, $amount, 0, $trx_type = '-', $balance_type, $trx, $remarks);
 
         $offerLock->status = 1;
         $offerLock->save(); // payment completed
@@ -2125,8 +2130,18 @@ class HomeController extends Controller
         $propertyOffer->save();
 
         $investment = (optional($offerLock->propertyOffer)->getInvestment);
-        $investment->user_id = $user->id; // transfer share
+        $investment->user_id = $buyer->id; // transfer share
         $investment->save();
+
+        // balance add to seller
+        $seller = User::findOrFail(optional($offerLock->propertyOffer)->offered_to);
+        $seller_new_balance = $seller['interest_balance'] + $amount;
+        $seller['interest_balance'] = $seller_new_balance;
+        $seller->save();
+
+        $trx = strRandom();
+        $remarks = 'Sell investment share ' . optional(optional(optional($offerLock->propertyOffer)->property)->details)->property_title. ' '. 'amount add to your interest balance';
+        BasicService::makeTransaction($seller, $amount, 0, $trx_type = '+', 'interest_balance', $trx, $remarks);
 
         $propertyShare = (optional($offerLock->propertyOffer)->propertyShare);
         $propertyShare->status = 0;
@@ -2162,6 +2177,7 @@ class HomeController extends Controller
 
     public function BuyShare(Request $request, $id)
     {
+
         $this->validate($request, [
             'balance_type' => 'required|string|max:50',
             'amount' => 'required|numeric',
@@ -2172,30 +2188,40 @@ class HomeController extends Controller
             return back()->with('error', 'Invalid Wallet Type');
         }
 
-        $user = $this->user;
+        $buyer = $this->user;
         $propertyShare = PropertyShare::with('property.details', 'getInvestment')->findOrFail($id);
 
         $amount = $propertyShare->amount;
 
-        if ($amount > $user->$balance_type) {
+        if ($amount > $buyer->$balance_type) {
             return back()->with('error', 'Insufficient Balance');
         }
 
-        $new_balance = getAmount($user->$balance_type - $amount); // new balance = user new balance
-        $user->$balance_type = $new_balance;
-        $user->total_invest += $request->amount;
-        $user->save();
+        $new_balance = $buyer->$balance_type - $amount; // new balance = user new balance
+        $buyer->$balance_type = $new_balance;
+        $buyer->total_invest += $request->amount;
+        $buyer->save();
         $trx = strRandom();
         $remarks = 'Share purchesed on ' . optional(optional($propertyShare->property)->details)->property_title;
 
-        BasicService::makeTransaction($user, $amount, 0, $trx_type = '-', $balance_type, $trx, $remarks);
+        BasicService::makeTransaction($buyer, $amount, 0, $trx_type = '-', $balance_type, $trx, $remarks);
 
         $propertyShare->status = 0;
         $propertyShare->save();
 
         $investment = $propertyShare->getInvestment;
-        $investment->user_id = $user->id; // transfer share
+        $investment->user_id = $buyer->id; // transfer share
         $investment->save();
+
+        // balance add to seller
+        $seller = User::findOrFail($propertyShare->investor_id);
+        $seller_new_balance = $seller['interest_balance'] + $amount;
+        $seller['interest_balance'] = $seller_new_balance;
+        $seller->save();
+
+        $trx = strRandom();
+        $remarks = 'Sell investment share ' . optional(optional($propertyShare->property)->details)->property_title. ' '. 'amount add to your interest balance';
+        BasicService::makeTransaction($seller, $amount, 0, $trx_type = '+', 'interest_balance', $trx, $remarks);
 
         return redirect()->route('user.propertyMarket', 'my-investment-properties')->with('success', 'A share of' . '`' . optional(optional($propertyShare->property)->details)->property_title . '`' . 'property has been successfully purchased.');
     }
