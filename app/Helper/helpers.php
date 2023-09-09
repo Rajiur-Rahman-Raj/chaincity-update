@@ -49,6 +49,16 @@ function menuActive($routeName, $type = null)
     }
 }
 
+function activeMenu($routeNames = [], $segment = null)
+{
+    $lastSegment = last(request()->segments());
+    $currentName = request()->route()->getName();
+    if (isset($segment)) {
+        return (in_array($currentName, $routeNames) && $lastSegment == $segment) ? 'active' : '';
+    }
+    return in_array($currentName, $routeNames) ? 'active' : '';
+}
+
 
 function getFile($image, $clean = '')
 {

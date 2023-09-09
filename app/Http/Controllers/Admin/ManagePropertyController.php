@@ -49,7 +49,7 @@ class ManagePropertyController extends Controller
             ->where('status', 1)
             ->latest()
             ->paginate(config('basic.paginate'));
-        return view($handleProperty[$type]['property_view'], $data, compact('title'));
+        return view($handleProperty[$type]['property_view'], $data, compact('title', 'type'));
     }
 
     public function propertyCreate()

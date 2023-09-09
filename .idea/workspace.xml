@@ -2,18 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c042b20e-ac07-4823-acfc-5307c5c6efae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/database/migrations/2023_05_02_115859_alter_rows_to_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/partials/select2Create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/project.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/themes/original/user/property/myOfferProperty.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/themes/original/user/property/myOfferProperty.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/themes/original/user/property/shareProperty.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/themes/original/user/property/shareProperty.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/S2BokTKRIIYN2Bem1Gkyr2utwldraiEaXAUA9h2P" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/be53ec337fbf26cbb44aa37d54cf37bc6611d42b.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/be53ec337fbf26cbb44aa37d54cf37bc6611d42b.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/framework/views/f6ff4123358c44e2c3c227297e06d7e7c77a3177.php" beforeDir="false" afterPath="$PROJECT_DIR$/storage/framework/views/f6ff4123358c44e2c3c227297e06d7e7c77a3177.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helper/helpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helper/helpers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ManagePropertyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ManagePropertyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/layouts/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/investedUserList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/investedUserList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/property/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/property/list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/5YptUFZM0JCrgSP3MbBF64ahrgtStfrtQQtZm44k" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/V1C1mtWDdZG1XgK7F4P0o8itNDG3TNy40tgeurG0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/framework/sessions/oKtO2U2hmixiFubeV1XFJm0pKifmvyx40NIEcqTQ" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -178,16 +178,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/xammp/htdocs/chaincity_update/project/database/migrations",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/courier/courier-management-master&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\xammp\htdocs\chaincity_update\project\database\migrations" />
@@ -213,6 +213,11 @@
       <workItem from="1693896386617" duration="18108000" />
       <workItem from="1693974761878" duration="24114000" />
       <workItem from="1694061616692" duration="21877000" />
+      <workItem from="1694149753611" duration="53000" />
+      <workItem from="1694149810061" duration="49000" />
+      <workItem from="1694150021940" duration="8120000" />
+      <workItem from="1694179376541" duration="3999000" />
+      <workItem from="1694215280909" duration="1195000" />
     </task>
     <servers />
   </component>

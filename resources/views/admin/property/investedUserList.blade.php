@@ -60,11 +60,11 @@
 
                             <td data-label="@lang('Profit Return Date')">
                                 @if($invest->how_many_times != 0 && $invest->how_many_times != null && $invest->return_date != null)
-                                    {{ customDate($invest->return_date) }}
+                                    {{ dateTime($invest->return_date) }}
                                 @elseif($invest->how_many_times != null && $invest->return_date == null)
                                     <span class="custom-badge badge-pill bg-warning }}">@lang('After Installments Clear')</span>
                                 @elseif($invest->how_many_times == null && $invest->return_date != null)
-                                    {{ customDate($invest->return_date) }}
+                                    {{ dateTime($invest->return_date) }}
                                 @endif
                             </td>
 

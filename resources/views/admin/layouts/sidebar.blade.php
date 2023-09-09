@@ -55,12 +55,18 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item {{menuActive(['admin.propertyCreate'])}}">
+                    <li class="sidebar-item {{menuActive(['admin.propertyList','admin.propertyCreate*', 'admin.propertyEdit*'],3)}}">
                         <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                             <i class="fa fa-building text-success"></i>
                             <span class="hide-menu">@lang('Investment Properties')</span>
                         </a>
-                        <ul aria-expanded="false" class="collapse first-level base-level-line">
+                        <ul aria-expanded="false" class="collapse first-level base-level-line {{menuActive(['admin.propertyCreate', 'admin.propertyEdit'],1)}}">
+                            <li class="sidebar-item {{menuActive(['admin.propertyCreate'])}}">
+                                <a class="sidebar-link {{menuActive(['admin.propertyCreate'])}}" href="{{ route('admin.propertyCreate')}}" aria-expanded="false">
+                                    <span class="hide-menu">@lang('Create New Property')</span>
+                                </a>
+                            </li>
+
                             <li class="sidebar-item">
                                 <a class="sidebar-link" href="{{ route('admin.propertyList',['all'])}}" aria-expanded="false">
                                     <span class="hide-menu">@lang('All Properties')</span>

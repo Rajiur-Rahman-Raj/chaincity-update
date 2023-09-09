@@ -44,7 +44,7 @@
                                                 <div class="form-group">
                                                     <label class="">@lang('Address') <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="address_id" class="form-control  type addressList">
+                                                    <select name="address_id" class="form-control create-address type addressList">
                                                         <option value="" selected disabled></option>
                                                         @foreach($allAddress as $address)
                                                             <option
@@ -71,7 +71,7 @@
                                             <div class="col-md-3 col-xl-3">
                                                 <label for="before_expiry_date"> @lang('Amenities')</label>
                                                 <select name="amenity_id[]"
-                                                        class="form-control propertyAmenities @error('amenity_id') is-invalid @enderror"
+                                                        class="form-control propertyAmenities create-amenities @error('amenity_id') is-invalid @enderror"
                                                         multiple>
                                                     <option disabled>@lang('Choose items')</option>
                                                     @foreach($allAmenities as $amenity)
@@ -469,7 +469,7 @@
                                             <div class="form-group">
                                                 <label>@lang('Profit Return Schedule') (<span class="text-primary font-weight-normal font-14">@lang('after how many days')</span>)</label>
                                                 <select name="how_many_days" id="how_many_days"
-                                                        class="form-control @error('how_many_days') is-invalid @enderror">
+                                                        class="form-control create-profit-schedule @error('how_many_days') is-invalid @enderror">
                                                     <option value="" disabled>@lang('Select a Period')</option>
                                                     @foreach($allSchedule as $schedule)
                                                         <option
@@ -574,7 +574,7 @@
 @endpush
 
 @push('js')
-
+    @include('partials.select2Create')
     <script>
         'use strict'
         $('.summernote').summernote({
@@ -594,7 +594,6 @@
             }
             reader.readAsDataURL(this.files[0]);
         });
-
 
         $(document).ready(function (e) {
             $(".generate").on('click', function () {
